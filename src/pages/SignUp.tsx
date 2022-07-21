@@ -1,5 +1,4 @@
 import React, { FormEventHandler } from "react";
-import "./App.css";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
@@ -83,7 +82,9 @@ const SignUp: React.FC = (): JSX.Element => {
             id={"firstName"}
             {...register("firstName")}
           />
-          <p> {errors.firstName?.message} </p>
+          <div className="invalid-feedback">
+            <p> {errors.firstName?.message} </p>
+          </div>
 
           <input
             className={`form-control ${errors.lastName ? "is-invalid" : ""}`}
@@ -92,7 +93,9 @@ const SignUp: React.FC = (): JSX.Element => {
             id="lastName"
             {...register("lastName")}
           />
-          <p> {errors.lastName?.message} </p>
+          <div className="invalid-feedback">
+            <p> {errors.lastName?.message} </p>
+          </div>
 
           <input
             className={`form-control ${errors.userName ? "is-invalid" : ""}`}
@@ -101,7 +104,9 @@ const SignUp: React.FC = (): JSX.Element => {
             placeholder="User Name"
             {...register("userName")}
           />
-          <p> {errors.userName?.message} </p>
+          <div className="invalid-feedback">
+            <p> {errors.userName?.message} </p>
+          </div>
 
           <input
             placeholder="Email"
@@ -112,7 +117,9 @@ const SignUp: React.FC = (): JSX.Element => {
               required: true,
             })}
           />
-          <p> {errors.email?.message} </p>
+          <div className="invalid-feedback">
+            <p> {errors.email?.message} </p>
+          </div>
           <div className="form-row">
             <div className="form-group">
               <input
