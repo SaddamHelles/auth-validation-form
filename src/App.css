@@ -1,5 +1,7 @@
 .App {
   text-align: center;
+  width: 600px;
+  display: flex;
 }
 
 .App-logo {
@@ -35,4 +37,18 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.container {
+  width: 300px;
+}
+
+label {
+  display: table-cell;
+  width: 1px;
+  white-space: nowrap;
+}
+
+input {
+  width: 70%;
 }
