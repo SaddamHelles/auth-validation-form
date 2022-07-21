@@ -3,6 +3,7 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
 import "bootstrap/dist/css/bootstrap.min.css";
+import "../App.css";
 interface IFormInput {
   firstName: string;
   lastName: string;
@@ -76,7 +77,9 @@ const SignUp: React.FC = (): JSX.Element => {
         </h2>
         <div className="container">
           <input
-            className={`form-control ${errors.firstName ? "is-invalid" : ""}`}
+            className={` form-control mb-2 ${
+              errors.firstName ? "is-invalid" : ""
+            }`}
             placeholder="First Name"
             type="text"
             id={"firstName"}
@@ -87,7 +90,9 @@ const SignUp: React.FC = (): JSX.Element => {
           </div>
 
           <input
-            className={`form-control ${errors.lastName ? "is-invalid" : ""}`}
+            className={` form-control mb-2 ${
+              errors.lastName ? "is-invalid" : ""
+            }`}
             placeholder="Last Name"
             type="text"
             id="lastName"
@@ -98,7 +103,9 @@ const SignUp: React.FC = (): JSX.Element => {
           </div>
 
           <input
-            className={`form-control ${errors.userName ? "is-invalid" : ""}`}
+            className={` form-control mb-2 ${
+              errors.userName ? "is-invalid" : ""
+            }`}
             type="text"
             id="userName"
             placeholder="User Name"
@@ -112,7 +119,7 @@ const SignUp: React.FC = (): JSX.Element => {
             placeholder="Email"
             id="email"
             type="email"
-            className={`form-control ${errors.email ? "is-invalid" : ""}`}
+            className={` form-control mb-2 ${errors.email ? "is-invalid" : ""}`}
             {...register("email", {
               required: true,
             })}
@@ -127,7 +134,7 @@ const SignUp: React.FC = (): JSX.Element => {
                 type="password"
                 placeholder="Password"
                 {...register("password", { required: true })}
-                className={`form-control ${
+                className={` form-control mb-2 ${
                   errors.password ? "is-invalid" : ""
                 }`}
               />
@@ -139,7 +146,7 @@ const SignUp: React.FC = (): JSX.Element => {
                 type="password"
                 placeholder="Confirm Password"
                 {...register("passwordConfirm", { required: true })}
-                className={`form-control ${
+                className={` form-control mb-2 ${
                   errors.passwordConfirm ? "is-invalid" : ""
                 }`}
               />
