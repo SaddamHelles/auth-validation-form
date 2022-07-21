@@ -76,9 +76,8 @@ const SignUp: React.FC = (): JSX.Element => {
           Sign Up
         </h2>
         <div className="container">
-          {/* <label htmlFor="firstName">First Name: </label> */}
           <input
-            className="form-control"
+            className={`form-control ${errors.firstName ? "is-invalid" : ""}`}
             placeholder="First Name"
             type="text"
             id={"firstName"}
@@ -86,9 +85,8 @@ const SignUp: React.FC = (): JSX.Element => {
           />
           <p> {errors.firstName?.message} </p>
 
-          {/* <label htmlFor="lastName">Last Name: </label> */}
           <input
-            className="form-control"
+            className={`form-control ${errors.lastName ? "is-invalid" : ""}`}
             placeholder="Last Name"
             type="text"
             id="lastName"
@@ -96,9 +94,8 @@ const SignUp: React.FC = (): JSX.Element => {
           />
           <p> {errors.lastName?.message} </p>
 
-          {/* <label htmlFor="userName">User Name: </label> */}
           <input
-            className="form-control"
+            className={`form-control ${errors.userName ? "is-invalid" : ""}`}
             type="text"
             id="userName"
             placeholder="User Name"
@@ -106,12 +103,11 @@ const SignUp: React.FC = (): JSX.Element => {
           />
           <p> {errors.userName?.message} </p>
 
-          {/* <label htmlFor="email">Email: </label> */}
           <input
             placeholder="Email"
             id="email"
             type="email"
-            className="form-control"
+            className={`form-control ${errors.email ? "is-invalid" : ""}`}
             {...register("email", {
               required: true,
             })}
@@ -119,9 +115,6 @@ const SignUp: React.FC = (): JSX.Element => {
           <p> {errors.email?.message} </p>
           <div className="form-row">
             <div className="form-group">
-              {/* <label>
-              <strong>Password</strong>
-            </label> */}
               <input
                 id={"password"}
                 type="password"
@@ -134,9 +127,6 @@ const SignUp: React.FC = (): JSX.Element => {
               <div className="invalid-feedback">{errors.password?.message}</div>
             </div>
             <div className="form-group">
-              {/* <label>
-              <strong>Confirm Password</strong>
-            </label> */}
               <input
                 id="passwordConfirm"
                 type="password"
