@@ -28,23 +28,23 @@ const SignUp: React.FC = (): JSX.Element => {
   const [signUpInfo, setSignUpInfo] = React.useState<JSX.Element>(<></>);
   const formSchema = Yup.object().shape({
     firstName: Yup.string()
-      .required("First Name is required at least tow letters")
-      .matches(/^[aA-zZ\s]+$/, "Only alphabets are allowed for this field ")
-      .max(40)
-      .min(2),
+      .required("First Name is required")
+      .matches(/^[aA-zZ\s]+$/, "Only alphabets are allowed")
+      .max(40, "At most Forty letters")
+      .min(2, "At least tow letters"),
     lastName: Yup.string()
-      .required("Last Name is required at least tow letters")
-      .matches(/^[aA-zZ\s]+$/, "Only alphabets are allowed for this field ")
-      .max(40)
-      .min(2),
+      .required("Last Name is required")
+      .matches(/^[aA-zZ\s]+$/, "Only alphabets are allowed")
+      .max(40, "At most Forty letters")
+      .min(2, "At least tow letters"),
     userName: Yup.string()
-      .required("User Name is required at least tow letters")
-      .matches(/^[aA-zZ\s]+$/, "Only alphabets are allowed for this field ")
-      .max(40)
-      .min(2),
+      .required("User Name is required")
+      .matches(/^[aA-zZ\s]+$/, "Only alphabets are allowed")
+      .max(40, "At most Forty letters")
+      .min(2, "At least tow letters"),
     email: Yup.string()
       .email("Must be a valid email")
-      .max(255)
+      .max(100)
       .required("Email is required"),
     password: Yup.string()
       .required("Password is required")
@@ -58,11 +58,13 @@ const SignUp: React.FC = (): JSX.Element => {
     useForm<IFormInput>(validationOpt);
   const onSubmit: SubmitHandler<IFormInput> = (data) => {
     setSignUpInfo(
-      <div style={{ color: "green", textAlign: "left" }}>
-        <h3>All Fields have been passed</h3>
-      </div>
+      <Box sx={{ color: "#1976d2", textAlign: "left" }}>
+        <Typography component="h3" variant="h5">
+          All Fields have been passed
+        </Typography>
+      </Box>
     );
-    console.log(data);
+    return console.log(data);
   };
   const { errors } = formState;
 
@@ -72,7 +74,7 @@ const SignUp: React.FC = (): JSX.Element => {
         <CssBaseline />
         <Box
           sx={{
-            marginTop: 8,
+            marginTop: 1,
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
@@ -88,8 +90,7 @@ const SignUp: React.FC = (): JSX.Element => {
           <Box
             component="form"
             onSubmit={handleSubmit(onSubmit)}
-            // onSubmit={handleSubmit}
-            sx={{ mt: 3 }}
+            sx={{ mt: 2 }}
           >
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
@@ -101,7 +102,7 @@ const SignUp: React.FC = (): JSX.Element => {
                   autoFocus
                   {...register("firstName")}
                 />
-                <p> {errors.firstName?.message} </p>
+                <Typography> {errors.firstName?.message} </Typography>
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
@@ -111,7 +112,7 @@ const SignUp: React.FC = (): JSX.Element => {
                   variant="filled"
                   {...register("lastName")}
                 />
-                <p> {errors.lastName?.message} </p>
+                <Typography> {errors.lastName?.message} </Typography>
               </Grid>
               <Grid item xs={12}>
                 <TextField
@@ -121,7 +122,7 @@ const SignUp: React.FC = (): JSX.Element => {
                   variant="filled"
                   {...register("userName")}
                 />
-                <p> {errors.userName?.message} </p>
+                <Typography> {errors.userName?.message} </Typography>
               </Grid>
               <Grid item xs={12}>
                 <TextField
@@ -132,9 +133,8 @@ const SignUp: React.FC = (): JSX.Element => {
                   {...register("email")}
                   autoComplete="email"
                 />
-                <p> {errors.email?.message} </p>
+                <Typography> {errors.email?.message} </Typography>
               </Grid>
-
               <Grid item xs={12}>
                 <TextField
                   required
@@ -145,7 +145,7 @@ const SignUp: React.FC = (): JSX.Element => {
                   id="password"
                   {...register("password")}
                 />
-                <p> {errors.password?.message} </p>
+                <Typography> {errors.password?.message} </Typography>
               </Grid>
               <Grid item xs={12}>
                 <TextField
@@ -156,7 +156,7 @@ const SignUp: React.FC = (): JSX.Element => {
                   type="password"
                   {...register("passwordConfirm")}
                 />
-                <p> {errors.passwordConfirm?.message} </p>
+                <Typography> {errors.passwordConfirm?.message} </Typography>
               </Grid>
             </Grid>
             <Button

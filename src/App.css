@@ -51,10 +51,10 @@ label {
 
 input {
   width: 70%;
-  /* margin-bottom: 10px; */
 }
 
 p {
+  margin-bottom: 0 !important;
   z-index: 10;
   color: red;
 }
