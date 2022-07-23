@@ -25,9 +25,6 @@ const UserContext: React.FC<PropsWithChildren> = ({ children }) => {
       if (!res.ok) throw Error("Did not received exected data!");
       const listUsers = await res.json();
       setUsers(listUsers);
-      // console.log(email + " " + password);
-      // console.log("Login page: ", listUsers);
-      // console.log("Flag: ", users[0].email === email);
 
       const isAvailable = users.find(
         (user) => user.email === email && user.password === password

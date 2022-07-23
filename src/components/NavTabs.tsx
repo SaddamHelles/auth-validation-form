@@ -27,15 +27,19 @@ export default function NavTabs() {
 
   return (
     <Box sx={{ position: "relative", height: "60px", marginTop: "15px" }}>
-      <Link to="/signup">
-        <span style={{ margin: "10px" }}>SignUp</span>
-      </Link>
       {authed ? (
         <Link to="/signin" onClick={handleLogout}>
           SignOut
         </Link>
       ) : (
-        <Link to="/signin">SignIn</Link>
+        <>
+          <Link to="/signup">
+            <span style={{ margin: "10px" }}>SignUp</span>
+          </Link>
+          <Link to="/signin">
+            <span style={{ margin: "10px" }}>SignIn</span>
+          </Link>
+        </>
       )}
       <Link to="/dashboard">
         <span style={{ margin: "10px" }}>Dashboard</span>

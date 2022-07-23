@@ -12,49 +12,17 @@ import Grid from "@mui/material/Grid";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { API_URL } from "../components/apiRequest";
-import { IUserInfo } from "./SignUp";
-import { useNavigate } from "react-router-dom";
 import { userContext } from "../context/UserContext";
 
 const theme = createTheme();
 
 const SignIn = () => {
   const { handleLogin } = React.useContext(userContext);
-  const [users, setUsers] = React.useState<IUserInfo[]>([]);
-  const navigate = useNavigate();
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     handleLogin(data.get("email"), data.get("password"));
-    const isAvailable = users.find(
-      (user) =>
-        user.email === data.get("email") &&
-        user.password === data.get("password")
-    );
-    if (isAvailable) {
-      console.log("This user is abailable in the json data!");
-      navigate("/dashboard");
-    } else console.log("This user is not abailable in the json data!");
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
   };
-
-  React.useEffect(() => {
-    (async () => {
-      try {
-        const res = await fetch(API_URL);
-        if (!res.ok) throw Error("Did not received exected data!");
-        const listUsers = await res.json();
-        console.log("Login page: ", listUsers);
-        // setUsers(listUsers);
-      } catch (error) {
-        console.log("error not handler");
-      }
-    })();
-  }, []);
   return (
     <ThemeProvider theme={theme}>
       <Grid container component="main" sx={{ height: "100vh" }}>

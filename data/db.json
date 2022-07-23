@@ -23,6 +23,14 @@
       "userName": "welcme",
       "email": "hi_e@gmail.com",
       "password": "zxczxc"
+    },
+    {
+      "id": 6400,
+      "firstName": "iop",
+      "lastName": "ghj",
+      "userName": "Ops",
+      "email": "iop_u@gmail.com",
+      "password": "123123"
     }
   ]
 }
