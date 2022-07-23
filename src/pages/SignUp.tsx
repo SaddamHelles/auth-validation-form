@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
@@ -14,6 +15,8 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import apiRequest from "../components/apiRequest";
+import { API_URL } from "../components/apiRequest";
 const theme = createTheme();
 interface IFormInput {
   firstName: string;
@@ -23,9 +26,19 @@ interface IFormInput {
   password: string;
   passwordConfirm: string;
 }
+export interface IUserInfo {
+  id: number;
+  firstName: string;
+  lastName: string;
+  userName: string;
+  email: string;
+  password: string;
+}
 
 const SignUp: React.FC = (): JSX.Element => {
-  const [signUpInfo, setSignUpInfo] = React.useState<JSX.Element>(<></>);
+  const [signUpInfo, setSignUpInfo] = useState<JSX.Element>(<></>);
+  const [users, setUsers] = useState<IUserInfo[]>([]);
+
   const formSchema = Yup.object().shape({
     firstName: Yup.string()
       .required("First Name is required")
@@ -57,6 +70,7 @@ const SignUp: React.FC = (): JSX.Element => {
   const { register, handleSubmit, formState } =
     useForm<IFormInput>(validationOpt);
   const onSubmit: SubmitHandler<IFormInput> = (data) => {
+    handleAddItem(data);
     setSignUpInfo(
       <Box sx={{ color: "#1976d2", textAlign: "left" }}>
         <Typography component="h3" variant="h5">
@@ -68,6 +82,31 @@ const SignUp: React.FC = (): JSX.Element => {
   };
   const { errors } = formState;
 
+  const handleAddItem = async (data: any) => {
+    console.log("first: ", data);
+    const newId = Math.floor(Math.random() * 10000);
+    const myNewUser = {
+      id: newId,
+      firstName: data.firstName,
+      lastName: data.lastName,
+      userName: data.userName,
+      email: data.email,
+      password: data.password,
+    };
+    const usrew = [...users, myNewUser];
+    setUsers(usrew);
+
+    const postOptions = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(myNewUser),
+    };
+
+    const result = await apiRequest(API_URL, postOptions);
+    if (result) console.log(result);
+  };
   return (
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">

@@ -1,0 +1,28 @@
+{
+  "users": [
+    {
+      "id": 5042,
+      "firstName": "Saddam",
+      "lastName": "Hilles",
+      "userName": "SDM",
+      "email": "sdm.hilles@gmail.com",
+      "password": "asdasd"
+    },
+    {
+      "id": 6038,
+      "firstName": "Feras",
+      "lastName": "Ali",
+      "userName": "Ali",
+      "email": "feras_ali@gmail.com",
+      "password": "qweqwe"
+    },
+    {
+      "id": 7001,
+      "firstName": "salem",
+      "lastName": "sss",
+      "userName": "welcme",
+      "email": "hi_e@gmail.com",
+      "password": "zxczxc"
+    }
+  ]
+}
