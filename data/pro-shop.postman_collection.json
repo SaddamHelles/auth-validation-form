@@ -1,0 +1,463 @@
+{
+	"info": {
+		"_postman_id": "a3e08074-626a-4d92-a030-c306c1cbd485",
+		"name": "pro-shop",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "8729247"
+	},
+	"item": [
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "Signup",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "email",
+									"value": "mossa123@gmail.com",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "#Mossa123@gmail",
+									"type": "text"
+								},
+								{
+									"key": "name",
+									"value": "mossa",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseUrl}}/signup",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"signup"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "email",
+									"value": "mossa123@gmail.com",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "#Mossa123@gmail",
+									"description": "#Mossa123@gmail",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseUrl}}/login",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Profile",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im1vc3NhMTIzQGdtYWlsLmNvbSIsIm5hbWUiOiJtb3NzYSIsImlhdCI6MTY1NzQ4OTYxNywiZXhwIjoxNjU3NDkzMjE3fQ.DDy7oXCBJ9tq_nYrgAkEq2hpyzMm7WHTP4qf4PwP3B0",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/profile",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"profile"
+							]
+						},
+						"description": "Get user data"
+					},
+					"response": []
+				},
+				{
+					"name": "Edit Profile",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "name",
+									"value": "bigsam",
+									"type": "text"
+								},
+								{
+									"key": "dob",
+									"value": "12-12-2022",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseUrl}}/profile",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"profile"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "bigsam",
+									"disabled": true
+								}
+							]
+						},
+						"description": "Edit user profile data"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Category",
+			"item": [
+				{
+					"name": "Add Category",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "title",
+									"value": "clothes",
+									"description": "string, min 2 chars",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseUrl}}/category",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"category"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Categories",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Uploads",
+			"item": [
+				{
+					"name": "Get PreSigned Url to upload image",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "memeType",
+									"value": "image/png",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseUrl}}/signed-url?memeType=image/png",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"signed-url"
+							],
+							"query": [
+								{
+									"key": "memeType",
+									"value": "image/png"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Products",
+			"item": [
+				{
+					"name": "Get Products",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/product?page=0&perPage=10&categories=[\"12ed2421-134e-484d-9f9f-d3bcddb3e012\"]&searchTerm=tShirt&price[from]=20&price[to]=100",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"product"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "perPage",
+									"value": "10"
+								},
+								{
+									"key": "categories",
+									"value": "[\"12ed2421-134e-484d-9f9f-d3bcddb3e012\"]",
+									"description": "the ids of the categories"
+								},
+								{
+									"key": "searchTerm",
+									"value": "tShirt"
+								},
+								{
+									"key": "price[from]",
+									"value": "20"
+								},
+								{
+									"key": "price[to]",
+									"value": "100"
+								}
+							]
+						},
+						"description": "Get all of the products paginated"
+					},
+					"response": []
+				},
+				{
+					"name": "Add Product",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "title",
+									"value": "TShirt",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "nice looking one",
+									"type": "text"
+								},
+								{
+									"key": "images",
+									"value": "[\"https://images.unsplash.com/photo-1525088553748-01d6e210e00b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1176&q=80\"]",
+									"type": "text"
+								},
+								{
+									"key": "categories",
+									"value": "[\"clothes\"]",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseUrl}}/product",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"product"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Product By Id",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/product/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"product",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "4f52a949-1a87-4898-bc63-c0c8b3c4d1a8"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Product",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "title",
+									"value": "hello",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "new dewsc",
+									"type": "text"
+								},
+								{
+									"key": "images",
+									"value": "[\"https://images.unsplash.com/photo-1525088553748\"]",
+									"type": "text"
+								},
+								{
+									"key": "categories",
+									"value": "[\"shit\"]",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseUrl}}/product/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"product",
+								":id"
+							],
+							"query": [
+								{
+									"key": "title",
+									"value": "shit",
+									"disabled": true
+								}
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "4f52a949-1a87-4898-bc63-c0c8b3c4d1a8"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete  Product",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/product/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"product",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": null
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

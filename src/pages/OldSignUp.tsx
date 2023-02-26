@@ -2,29 +2,34 @@ import { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
+import "bootstrap/dist/css/bootstrap.min.css";
 import "../App.css";
 import * as React from "react";
+import Avatar from "@mui/material/Avatar";
+import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
+import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import apiRequest from "../components/apiRequest";
 import { API_URL } from "../components/apiRequest";
-import { Button, Checkbox, FormControlLabel, Link } from "@mui/material";
-import { useDispatch, useSelector } from "react-redux";
-import { addNewUser } from "../feature/signup/signupSlice";
-import { useAppSelector, useAppDispatch } from "../app/hooks";
 const theme = createTheme();
 interface IFormInput {
+  firstName: string;
+  lastName: string;
+  userName: string;
   email: string;
   password: string;
-  name: string;
+  passwordConfirm: string;
 }
 export interface IUserInfo {
   id: number;
+  firstName: string;
+  lastName: string;
   userName: string;
   email: string;
   password: string;
@@ -32,11 +37,19 @@ export interface IUserInfo {
 
 const SignUp: React.FC = (): JSX.Element => {
   const [users, setUsers] = useState<IUserInfo[]>([]);
-  const dispatch = useAppDispatch();
-  const [addRequestStatus, setAddRequestStatus] = useState("idle");
 
   const formSchema = Yup.object().shape({
-    name: Yup.string()
+    firstName: Yup.string()
+      .required("First Name is required")
+      .matches(/^[aA-zZ\s]+$/, "Only alphabets are allowed")
+      .max(40, "At most Forty letters")
+      .min(2, "At least tow letters"),
+    lastName: Yup.string()
+      .required("Last Name is required")
+      .matches(/^[aA-zZ\s]+$/, "Only alphabets are allowed")
+      .max(40, "At most Forty letters")
+      .min(2, "At least tow letters"),
+    userName: Yup.string()
       .required("User Name is required")
       .matches(/^[aA-zZ\s]+$/, "Only alphabets are allowed")
       .max(40, "At most Forty letters")
@@ -48,29 +61,15 @@ const SignUp: React.FC = (): JSX.Element => {
     password: Yup.string()
       .required("Password is required")
       .min(4, "Password length should be at least 4 characters"),
+    passwordConfirm: Yup.string()
+      .required("Confirm Password is required")
+      .oneOf([Yup.ref("password")], "Passwords must and should match"),
   });
   const validationOpt = { resolver: yupResolver(formSchema) };
   const { register, handleSubmit, formState } =
     useForm<IFormInput>(validationOpt);
   const onSubmit: SubmitHandler<IFormInput> = (data) => {
-    // useDispatch
-    // handleAddItem(data);
-    try {
-      setAddRequestStatus("pending");
-      // console.log("data.email: ", data.email);
-      // console.log("data.name: ", data.name);
-      dispatch(
-        addNewUser({
-          email: data.email,
-          password: data.password,
-          name: data.name,
-        })
-      ).unwrap();
-    } catch (err) {
-      console.error("Failed to save new post", err);
-    } finally {
-      setAddRequestStatus("idle");
-    }
+    handleAddItem(data);
     return console.log(data);
   };
   const { errors } = formState;
@@ -80,6 +79,8 @@ const SignUp: React.FC = (): JSX.Element => {
     const newId = Math.floor(Math.random() * 10000);
     const myNewUser = {
       id: newId,
+      firstName: data.firstName,
+      lastName: data.lastName,
       userName: data.userName,
       email: data.email,
       password: data.password,
@@ -98,24 +99,24 @@ const SignUp: React.FC = (): JSX.Element => {
     const result = await apiRequest(API_URL, postOptions);
     if (result) console.log(result);
   };
-  // console.log("cccccccccccccc: ", formState.isValid);
+  console.log("cccccccccccccc: ", formState.isValid);
   return (
     <ThemeProvider theme={theme}>
-      <Container component="main" maxWidth="sm">
+      <Container component="main" maxWidth="xs">
         <CssBaseline />
         <Box
           sx={{
+            marginTop: 1,
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
-            border: "1px solid #000",
-            padding: "1.5rem",
-            borderRadius: "6px",
-            textAlign: "start",
           }}
         >
+          <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
+            <LockOutlinedIcon />
+          </Avatar>
           <Typography component="h1" variant="h5">
-            CREATE ACCOUNT
+            Sign up
           </Typography>
           {formState.isValid && (
             <Box sx={{ color: "#1976d2", textAlign: "left" }}>
@@ -129,18 +130,41 @@ const SignUp: React.FC = (): JSX.Element => {
             onSubmit={handleSubmit(onSubmit)}
             sx={{ mt: 2 }}
           >
-            <Grid
-              sx={{ color: "#D1094B" }}
-              alignItems="flex-start"
-              container
-              spacing={2}
-            >
+            <Grid container spacing={2}>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  fullWidth
+                  id="firstName"
+                  placeholder="First Name"
+                  variant="filled"
+                  autoFocus
+                  {...register("firstName")}
+                />
+                <Typography> {errors.firstName?.message} </Typography>
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  fullWidth
+                  id="lastName"
+                  placeholder="Last Name"
+                  variant="filled"
+                  {...register("lastName")}
+                />
+                <Typography> {errors.lastName?.message} </Typography>
+              </Grid>
               <Grid item xs={12}>
                 <TextField
                   fullWidth
-                  inputProps={{
-                    style: { backgroundColor: "white" },
-                  }}
+                  id="userName"
+                  placeholder="User Name"
+                  variant="filled"
+                  {...register("userName")}
+                />
+                <Typography> {errors.userName?.message} </Typography>
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  fullWidth
                   id="email"
                   placeholder="Email"
                   variant="filled"
@@ -151,24 +175,8 @@ const SignUp: React.FC = (): JSX.Element => {
               </Grid>
               <Grid item xs={12}>
                 <TextField
-                  inputProps={{
-                    style: { backgroundColor: "white" },
-                  }}
+                  required
                   fullWidth
-                  id="name"
-                  placeholder="User Name"
-                  variant="filled"
-                  {...register("name")}
-                />
-                <Typography> {errors.name?.message} </Typography>
-              </Grid>
-
-              <Grid item xs={12}>
-                <TextField
-                  fullWidth
-                  inputProps={{
-                    style: { backgroundColor: "white" },
-                  }}
                   placeholder="Password"
                   variant="filled"
                   type="password"
@@ -177,23 +185,17 @@ const SignUp: React.FC = (): JSX.Element => {
                 />
                 <Typography> {errors.password?.message} </Typography>
               </Grid>
-
-              <Box
-                sx={{
-                  display: "flex",
-                  justifyContent: "flex-start",
-                }}
-              >
-                <FormControlLabel
-                  sx={{
-                    marginLeft: "0px",
-                    marginTop: "1rem",
-                    color: "black !important",
-                  }}
-                  control={<Checkbox value="remember" color="primary" />}
-                  label="Let's get personal! We'll send you only the good stuff"
+              <Grid item xs={12}>
+                <TextField
+                  fullWidth
+                  placeholder="Confirm Password"
+                  variant="filled"
+                  id="passwordConfirm"
+                  type="password"
+                  {...register("passwordConfirm")}
                 />
-              </Box>
+                <Typography> {errors.passwordConfirm?.message} </Typography>
+              </Grid>
             </Grid>
             <Button
               type="submit"
@@ -201,14 +203,9 @@ const SignUp: React.FC = (): JSX.Element => {
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
-              REGISTER NOW
+              Sign Up
             </Button>
           </Box>
-          <Grid item>
-            <Link href="#" variant="body2">
-              {"I HAVE AN ACCOUNTs"}
-            </Link>
-          </Grid>
         </Box>
       </Container>
     </ThemeProvider>
